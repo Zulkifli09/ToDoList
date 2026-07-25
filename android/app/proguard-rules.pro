@@ -15,3 +15,4 @@
 # General Android
 -dontwarn android.support.**
 -dontwarn androidx.**
+-dontwarn com.google.android.play.core.**
