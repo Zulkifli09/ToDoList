@@ -16,8 +16,6 @@ subprojects {
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
 subprojects {
-    project.evaluationDependsOn(":app")
-    
     // Fix for legacy plugins (like isar_flutter_libs) that don't specify a namespace
     afterEvaluate {
         val androidExtension = extensions.findByName("android")
@@ -37,6 +35,10 @@ subprojects {
             }
         }
     }
+}
+
+subprojects {
+    project.evaluationDependsOn(":app")
 }
 
 tasks.register<Delete>("clean") {
