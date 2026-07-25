@@ -33,6 +33,13 @@ subprojects {
                     }
                 }
             }
+            
+            // Force compileSdk to 36 to satisfy new Android plugins requirements
+            val setCompileSdkMethod = androidExtension::class.java.methods.find { it.name == "setCompileSdkVersion" && it.parameterCount == 1 && it.parameterTypes[0].name == "int" } 
+                ?: androidExtension::class.java.methods.find { it.name == "setCompileSdk" && it.parameterCount == 1 && it.parameterTypes[0].name == "java.lang.Integer" }
+            if (setCompileSdkMethod != null) {
+                setCompileSdkMethod.invoke(androidExtension, 36)
+            }
         }
     }
 }
