@@ -6,10 +6,27 @@ import 'package:task_flow/data/local/isar_db.dart';
 import 'package:task_flow/services/notifications/notification_service.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await IsarDb.initialize();
-  await NotificationService().init();
-  runApp(const ProviderScope(child: TaskFlowApp()));
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await IsarDb.initialize();
+    await NotificationService().init();
+    runApp(const ProviderScope(child: TaskFlowApp()));
+  } catch (e, stackTrace) {
+    runApp(MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'FATAL ERROR:\n$e\n\nSTACKTRACE:\n$stackTrace',
+              style: const TextStyle(color: Colors.red, fontSize: 12),
+            ),
+          ),
+        ),
+      ),
+    ));
+  }
 }
 
 class TaskFlowApp extends StatelessWidget {
